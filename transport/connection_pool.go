@@ -656,10 +656,14 @@ func (handler *connectionHandler) handleMessage(msg sip.Message, raddr string) {
 			viaHop.Params.Add("received", sip.String{Str: rhost})
 		}
 
-		// rfc3581
-		if viaHop.Params.Has("rport") {
+		if rport != "" && rport != viaHop.Port.String() {
 			viaHop.Params.Add("rport", sip.String{Str: rport})
 		}
+
+		// rfc3581
+		//if viaHop.Params.Has("rport") {
+		//	viaHop.Params.Add("rport", sip.String{Str: rport})
+		//}
 
 		if !handler.Connection().Streamed() {
 			if !viaHop.Params.Has("rport") {
