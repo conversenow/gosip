@@ -640,6 +640,7 @@ func (handler *connectionHandler) pipeOutputs(raddr string, msgs <-chan sip.Mess
 func (handler *connectionHandler) handleMessage(msg sip.Message, raddr string) {
 	msg.SetDestination(handler.Connection().LocalAddr().String())
 	rhost, rport, _ := net.SplitHostPort(raddr)
+	handler.Log().Debugf("Real source address: %v", raddr)
 
 	switch msg := msg.(type) {
 	case sip.Request:
